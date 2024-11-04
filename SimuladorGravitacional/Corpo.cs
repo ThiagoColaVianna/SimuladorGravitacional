@@ -17,16 +17,28 @@ namespace SimuladorGravitacional
         protected double VelX;
         protected double VelY;
 
-        public Corpo()
+        public Corpo(string nome, double massa, double raio, double densidade, double posX, double posY, double velX, double velY)
         {
             this.nome = nome;
             this.massa = massa;
             this.raio = raio;
             this.densidade = densidade;
-            this.PosX = PosX;
-            this.PosY = PosY;
-            this.VelX = VelX;
-            this.VelY = VelY;
+            this.PosX = posX;
+            this.PosY = posY;
+            this.VelX = velX;
+            this.VelY = velY;
+        }
+
+        public Corpo()
+        {
+            this.nome = "Desconhecido";
+            this.massa = 0.0;
+            this.raio = 0.0;
+            this.densidade = 0.0;
+            this.PosX = 0.0;
+            this.PosY = 0.0;
+            this.VelX = 0.0;
+            this.VelY = 0.0;
         }
 
         public string GetNome()
