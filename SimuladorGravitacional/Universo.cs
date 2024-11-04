@@ -8,6 +8,11 @@ namespace SimuladorGravitacional
 {
     internal class Universo : Corpo
     {
-        //calculos para a simulação
+        private List<Corpo> corpos;
+
+        public Universo()
+        {
+            corpos = new List<Corpo>();
+        }
     }
 }
