@@ -46,6 +46,7 @@
             label3 = new Label();
             Corpos_Box = new TextBox();
             label1 = new Label();
+            Parar_bt = new Button();
             groupBox1.SuspendLayout();
             SuspendLayout();
             // 
@@ -56,6 +57,7 @@
             // 
             // groupBox1
             // 
+            groupBox1.Controls.Add(Parar_bt);
             groupBox1.Controls.Add(Iniciar_bt);
             groupBox1.Controls.Add(VelY_Box);
             groupBox1.Controls.Add(label11);
@@ -86,6 +88,7 @@
             Iniciar_bt.TabIndex = 22;
             Iniciar_bt.Text = "Iniciar";
             Iniciar_bt.UseVisualStyleBackColor = true;
+            Iniciar_bt.Click += Iniciar_bt_Click;
             // 
             // VelY_Box
             // 
@@ -205,6 +208,16 @@
             label1.TabIndex = 0;
             label1.Text = "Corpos";
             // 
+            // Parar_bt
+            // 
+            Parar_bt.Location = new Point(138, 58);
+            Parar_bt.Name = "Parar_bt";
+            Parar_bt.Size = new Size(75, 23);
+            Parar_bt.TabIndex = 23;
+            Parar_bt.Text = "Parar";
+            Parar_bt.UseVisualStyleBackColor = true;
+            Parar_bt.Click += Parar_bt_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -213,7 +226,6 @@
             Controls.Add(groupBox1);
             Name = "Form1";
             Text = "SimuladorGravitacional";
-            Load += Form1_Load;
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
             ResumeLayout(false);
@@ -238,5 +250,6 @@
         private Label label10;
         private TextBox VelX_Box;
         private Button Iniciar_bt;
+        private Button Parar_bt;
     }
 }
