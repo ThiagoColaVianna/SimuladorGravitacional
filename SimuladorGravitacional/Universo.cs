@@ -1,7 +1,7 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace SimuladorGravitacional
@@ -9,10 +9,14 @@ namespace SimuladorGravitacional
     internal class Universo
     {
         public List<Corpo> corpos;
+        public ConcurrentBag<Corpo> corposParaRemover;
+        public int QuantidadeColididos;
 
         public Universo()
         {
             corpos = new List<Corpo>();
+            corposParaRemover = new ConcurrentBag<Corpo>();
+            QuantidadeColididos = 0;
         }
 
         public void AdicionarCorpo(Corpo corpo)
@@ -20,74 +24,93 @@ namespace SimuladorGravitacional
             corpos.Add(corpo);
         }
 
-        public void Atualizar(double deltaTime, int larguraTela, int alturaTela)
+        public void Atualizar(int larguraTela, int alturaTela)
         {
-            List<Corpo> novosCorpos = new List<Corpo>(corpos); // Cria uma nova lista para armazenar os novos corpos
+            // Resetar as forças antes de calcular
+            foreach (var corpo in corpos)
+            {
+                corpo.ForcaX = 0.0;
+                corpo.ForcaY = 0.0;
+            }
 
             // Calcular forças entre os corpos
-            Parallel.For(0, corpos.Count, i =>
+            var corposCopia = corpos.ToList();
+            Parallel.For(0, corposCopia.Count, i =>
             {
-                for (int j = i + 1; j < corpos.Count; j++)
+                for (int j = i + 1; j < corposCopia.Count; j++)
                 {
-                    if (corpos[i].Colidiu(corpos[j]))
+                    if (corposCopia[i].Colidiu(corposCopia[j]))
                     {
                         // Tratamento de colisão
-                        lock (novosCorpos) // Lock para evitar condições de corrida
-                        {
-                            Corpo novoCorpo = corpos[i] + corpos[j];
-                            novosCorpos.Remove(corpos[i]);
-                            novosCorpos.Remove(corpos[j]);
-                            novosCorpos.Add(novoCorpo);
-                        }
+                        TratamentoColisao(corposCopia[i], corposCopia[j]);
+                        corposParaRemover.Add(corposCopia[i]);
+                        corposParaRemover.Add(corposCopia[j]);
                     }
                     else
                     {
                         // Cálculo da força gravitacional
                         double G = 6.67430e-11; // Constante gravitacional
-                        double distancia = corpos[i].Distancia(corpos[j]);
+                        double distancia = corposCopia[i].Distancia(corposCopia[j]);
 
-                        // Evitar divisão por zero
                         if (distancia > 0)
                         {
-                            double forca = G * (corpos[i].Massa * corpos[j].Massa) / (distancia * distancia);
+                            double forca = G * (corposCopia[i].Massa * corposCopia[j].Massa) / (distancia * distancia);
+                            double forcax = forca * (corposCopia[j].PosX - corposCopia[i].PosX) / distancia;
+                            double forcay = forca * (corposCopia[j].PosY - corposCopia[i].PosY) / distancia;
 
-                            // Direção da força
-                            double forcax = forca * (corpos[j].PosX - corpos[i].PosX) / distancia;
-                            double forcay = forca * (corpos[j].PosY - corpos[i].PosY) / distancia;
-
-                            // Aplicar forças
-                            lock (corpos) // Lock para evitar condições de corrida
+                            lock (corposCopia[i])
                             {
-                                // Atualizar velocidades
-                                corpos[i].VelX += forcax / corpos[i].Massa * deltaTime;
-                                corpos[i].VelY += forcay / corpos[i].Massa * deltaTime;
+                                corposCopia[i].ForcaX += forcax;
+                                corposCopia[i].ForcaY += forcay;
+                            }
 
-                                // Atualiza as velocidades do corpo j (força oposta)
-                                corpos[j].VelX -= forcax / corpos[j].Massa * deltaTime;
-                                corpos[j].VelY -= forcay / corpos[j].Massa * deltaTime;
+                            lock (corposCopia[j])
+                            {
+                                corposCopia[j].ForcaX -= forcax;
+                                corposCopia[j].ForcaY -= forcay;
                             }
                         }
                     }
                 }
             });
 
-            // Atualizar posições
-            Parallel.For(0, novosCorpos.Count, i =>
+            // Remover corpos que colidiram
+            lock (corpos)
             {
-                novosCorpos[i].AtualizarPosicao(deltaTime, larguraTela, alturaTela);
+                foreach (var corpo in corposParaRemover)
+                {
+                    corpos.Remove(corpo);
+                }
+            }
+
+            // Atualizar velocidades baseado nas forças
+            Parallel.For(0, corpos.Count, i =>
+            {
+                if (corpos[i].Massa > 0)
+                {
+                    corpos[i].VelX += corpos[i].ForcaX / corpos[i].Massa;
+                    corpos[i].VelY += corpos[i].ForcaY / corpos[i].Massa;
+                }
             });
 
-            // Substituir a lista original de corpos pela nova lista
-            lock (corpos) // Lock para evitar condições de corrida
+            // Atualizar posições
+            Parallel.For(0, corpos.Count, i =>
             {
-                corpos = novosCorpos;
-            }
+                corpos[i].PosX += corpos[i].VelX; // Atualiza a posição X
+                corpos[i].PosY += corpos[i].VelY; // Atualiza a posição Y
+
+                // Limitar os corpos dentro da tela
+                if (corpos[i].PosX < 0) corpos[i].PosX = 0;
+                if (corpos[i].PosX > larguraTela) corpos[i].PosX = larguraTela;
+                if (corpos[i].PosY < 0) corpos[i].PosY = 0;
+                if (corpos[i].PosY > alturaTela) corpos[i].PosY = alturaTela;
+            });
         }
 
         private void TratamentoColisao(Corpo a, Corpo b)
         {
             Corpo novoCorpo = a + b; // Usa o operador sobrecarregado
-            lock (corpos) // Lock para evitar condições de corrida
+            lock (corpos)
             {
                 corpos.Remove(a);
                 corpos.Remove(b);
