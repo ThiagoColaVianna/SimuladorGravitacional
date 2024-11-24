@@ -31,6 +31,7 @@
             components = new System.ComponentModel.Container();
             contextMenuStrip1 = new ContextMenuStrip(components);
             groupBox1 = new GroupBox();
+            Parar_bt = new Button();
             Iniciar_bt = new Button();
             VelY_Box = new TextBox();
             label11 = new Label();
@@ -46,7 +47,9 @@
             label3 = new Label();
             Corpos_Box = new TextBox();
             label1 = new Label();
-            Parar_bt = new Button();
+            button1 = new Button();
+            label2 = new Label();
+            label5 = new Label();
             groupBox1.SuspendLayout();
             SuspendLayout();
             // 
@@ -57,6 +60,10 @@
             // 
             // groupBox1
             // 
+            groupBox1.BackColor = SystemColors.ControlLightLight;
+            groupBox1.Controls.Add(label5);
+            groupBox1.Controls.Add(label2);
+            groupBox1.Controls.Add(button1);
             groupBox1.Controls.Add(Parar_bt);
             groupBox1.Controls.Add(Iniciar_bt);
             groupBox1.Controls.Add(VelY_Box);
@@ -80,9 +87,19 @@
             groupBox1.TabIndex = 1;
             groupBox1.TabStop = false;
             // 
+            // Parar_bt
+            // 
+            Parar_bt.Location = new Point(138, 51);
+            Parar_bt.Name = "Parar_bt";
+            Parar_bt.Size = new Size(75, 23);
+            Parar_bt.TabIndex = 23;
+            Parar_bt.Text = "Parar";
+            Parar_bt.UseVisualStyleBackColor = true;
+            Parar_bt.Click += Parar_bt_Click;
+            // 
             // Iniciar_bt
             // 
-            Iniciar_bt.Location = new Point(138, 22);
+            Iniciar_bt.Location = new Point(6, 51);
             Iniciar_bt.Name = "Iniciar_bt";
             Iniciar_bt.Size = new Size(75, 23);
             Iniciar_bt.TabIndex = 22;
@@ -92,7 +109,7 @@
             // 
             // VelY_Box
             // 
-            VelY_Box.Location = new Point(6, 376);
+            VelY_Box.Location = new Point(138, 295);
             VelY_Box.Name = "VelY_Box";
             VelY_Box.ReadOnly = true;
             VelY_Box.Size = new Size(49, 23);
@@ -101,7 +118,7 @@
             // label11
             // 
             label11.AutoSize = true;
-            label11.Location = new Point(6, 358);
+            label11.Location = new Point(138, 277);
             label11.Name = "label11";
             label11.Size = new Size(29, 15);
             label11.TabIndex = 20;
@@ -110,7 +127,7 @@
             // label10
             // 
             label10.AutoSize = true;
-            label10.Location = new Point(6, 299);
+            label10.Location = new Point(138, 224);
             label10.Name = "label10";
             label10.Size = new Size(29, 15);
             label10.TabIndex = 19;
@@ -118,7 +135,7 @@
             // 
             // VelX_Box
             // 
-            VelX_Box.Location = new Point(6, 317);
+            VelX_Box.Location = new Point(138, 242);
             VelX_Box.Name = "VelX_Box";
             VelX_Box.ReadOnly = true;
             VelX_Box.Size = new Size(49, 23);
@@ -127,7 +144,7 @@
             // label8
             // 
             label8.AutoSize = true;
-            label8.Location = new Point(6, 237);
+            label8.Location = new Point(10, 338);
             label8.Name = "label8";
             label8.Size = new Size(33, 15);
             label8.TabIndex = 15;
@@ -135,7 +152,7 @@
             // 
             // PosY_Box
             // 
-            PosY_Box.Location = new Point(6, 255);
+            PosY_Box.Location = new Point(10, 356);
             PosY_Box.Name = "PosY_Box";
             PosY_Box.ReadOnly = true;
             PosY_Box.Size = new Size(49, 23);
@@ -144,7 +161,7 @@
             // label7
             // 
             label7.AutoSize = true;
-            label7.Location = new Point(6, 180);
+            label7.Location = new Point(10, 277);
             label7.Name = "label7";
             label7.Size = new Size(33, 15);
             label7.TabIndex = 13;
@@ -152,7 +169,7 @@
             // 
             // PosX_Box
             // 
-            PosX_Box.Location = new Point(6, 198);
+            PosX_Box.Location = new Point(10, 295);
             PosX_Box.Name = "PosX_Box";
             PosX_Box.ReadOnly = true;
             PosX_Box.Size = new Size(49, 23);
@@ -160,7 +177,7 @@
             // 
             // TempoIteracao_Box
             // 
-            TempoIteracao_Box.Location = new Point(6, 134);
+            TempoIteracao_Box.Location = new Point(138, 184);
             TempoIteracao_Box.Name = "TempoIteracao_Box";
             TempoIteracao_Box.ReadOnly = true;
             TempoIteracao_Box.Size = new Size(49, 23);
@@ -169,7 +186,7 @@
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(6, 116);
+            label4.Location = new Point(102, 166);
             label4.Name = "label4";
             label4.Size = new Size(123, 15);
             label4.TabIndex = 6;
@@ -177,7 +194,7 @@
             // 
             // Iteracoes_Box
             // 
-            Iteracoes_Box.Location = new Point(6, 80);
+            Iteracoes_Box.Location = new Point(10, 242);
             Iteracoes_Box.Name = "Iteracoes_Box";
             Iteracoes_Box.ReadOnly = true;
             Iteracoes_Box.Size = new Size(49, 23);
@@ -186,7 +203,7 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(6, 62);
+            label3.Location = new Point(10, 224);
             label3.Name = "label3";
             label3.Size = new Size(54, 15);
             label3.TabIndex = 4;
@@ -194,7 +211,7 @@
             // 
             // Corpos_Box
             // 
-            Corpos_Box.Location = new Point(6, 27);
+            Corpos_Box.Location = new Point(10, 184);
             Corpos_Box.Name = "Corpos_Box";
             Corpos_Box.Size = new Size(49, 23);
             Corpos_Box.TabIndex = 1;
@@ -202,26 +219,44 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(6, 9);
+            label1.Location = new Point(10, 166);
             label1.Name = "label1";
             label1.Size = new Size(45, 15);
             label1.TabIndex = 0;
             label1.Text = "Corpos";
             // 
-            // Parar_bt
+            // button1
             // 
-            Parar_bt.Location = new Point(138, 58);
-            Parar_bt.Name = "Parar_bt";
-            Parar_bt.Size = new Size(75, 23);
-            Parar_bt.TabIndex = 23;
-            Parar_bt.Text = "Parar";
-            Parar_bt.UseVisualStyleBackColor = true;
-            Parar_bt.Click += Parar_bt_Click;
+            button1.Location = new Point(56, 80);
+            button1.Name = "button1";
+            button1.Size = new Size(111, 24);
+            button1.TabIndex = 24;
+            button1.Text = "Carregar Arquivos";
+            button1.UseVisualStyleBackColor = true;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new Point(55, 19);
+            label2.Name = "label2";
+            label2.Size = new Size(112, 15);
+            label2.TabIndex = 25;
+            label2.Text = "FUNCIONALIDADES";
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Location = new Point(69, 134);
+            label5.Name = "label5";
+            label5.Size = new Size(89, 15);
+            label5.TabIndex = 26;
+            label5.Text = "INFORMAÇÕES";
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = SystemColors.InactiveCaptionText;
             ClientSize = new Size(808, 645);
             Controls.Add(groupBox1);
             Name = "Form1";
@@ -251,5 +286,8 @@
         private TextBox VelX_Box;
         private Button Iniciar_bt;
         private Button Parar_bt;
+        private Button button1;
+        private Label label5;
+        private Label label2;
     }
 }

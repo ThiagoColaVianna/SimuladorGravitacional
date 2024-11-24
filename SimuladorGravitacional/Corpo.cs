@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Metadata.Ecma335;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SimuladorGravitacional
 {
@@ -17,6 +12,8 @@ namespace SimuladorGravitacional
         public double PosY { get; set; }
         public double VelX { get; set; }
         public double VelY { get; set; }
+        public double ForcaX { get; set; }
+        public double ForcaY { get; set; }
 
         public Corpo(string nome, double massa, double densidade, double posX, double posY)
         {
@@ -28,6 +25,8 @@ namespace SimuladorGravitacional
             PosY = posY;
             VelX = 0.0;
             VelY = 0.0;
+            ForcaX = 0.0;
+            ForcaY = 0.0;
         }
 
         public static Corpo operator +(Corpo a, Corpo b)
@@ -54,25 +53,26 @@ namespace SimuladorGravitacional
 
         public bool Colidiu(Corpo outro)
         {
-            return Distancia(outro) < (this.Raio + outro.Raio);
+            return Distancia(outro) <= (this.Raio + outro.Raio);
         }
 
-        public void AtualizarPosicao(double deltaTime, int larguraTela, int alturaTela)
+        public void AtualizarPosicao(int larguraTela, int alturaTela)
         {
-            PosX += VelX * deltaTime;
-            PosY += VelY * deltaTime;
+            // Atualiza a posição do corpo
+            PosX += VelX;
+            PosY += VelY;
 
-            // Verifica limites da tela e inverte a velocidade se necessário
-            if (PosX - Raio < 0 || PosX + Raio > larguraTela)
+            // Verifica colisão com as bordas da tela
+            if (PosX < 0 || PosX > larguraTela)
             {
                 VelX = -VelX; // Inverte a velocidade em X
-                PosX = Math.Clamp(PosX, Raio, larguraTela - Raio); // Mantém dentro dos limites
+                PosX = Math.Max(0, Math.Min(PosX, larguraTela)); // Ajusta a posição para ficar dentro da tela
             }
 
-            if (PosY - Raio < 0 || PosY + Raio > alturaTela)
+            if (PosY < 0 || PosY > alturaTela)
             {
                 VelY = -VelY; // Inverte a velocidade em Y
-                PosY = Math.Clamp(PosY, Raio, alturaTela - Raio); // Mantém dentro dos limites
+                PosY = Math.Max(0, Math.Min(PosY, alturaTela)); // Ajusta a posição para ficar dentro da tela
             }
         }
     }
