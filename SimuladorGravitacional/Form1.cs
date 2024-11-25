@@ -112,7 +112,7 @@ namespace SimuladorGravitacional
                 }
 
                 // Inicia a simulação manualmente
-                simulacaoTimer.Interval = 1; // Define um intervalo muito curto para simular a atualização contínua
+                simulacaoTimer.Interval = 30; // Define um intervalo muito curto para simular a atualização contínua
                 simulacaoTimer.Tick += (s, args) =>
                 {
                     AtualizarEDesenhar();
@@ -151,14 +151,14 @@ namespace SimuladorGravitacional
             simulacaoTimer.Stop(); // Para a simulação
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        public void button1_Click(object sender, EventArgs e)
         {
             // Cria uma nova instância de OpenFileDialog
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
                 // Configura o filtro para mostrar apenas arquivos .ini
-                openFileDialog.Filter = "Arquivos INI (*.ini)|*.ini|Todos os arquivos (*.*)|*.*";
-                openFileDialog.Title = "Selecione um arquivo .ini";
+                openFileDialog.Filter = "Arquivos INI (*.uni)|*.uni|Todos os arquivos (*.*)|*.*";
+                openFileDialog.Title = "Selecione um arquivo .uni";
 
                 // Exibe o diálogo e verifica se o usuário selecionou um arquivo
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
@@ -172,35 +172,66 @@ namespace SimuladorGravitacional
             }
         }
 
-        private void CarregarArquivoIni(string filePath)
-        {            
-            try
+        public void CarregarArquivoIni(string filePath)
+{
+        try
+        {
+            // Lê todas as linhas do arquivo
+            string[] linhas = System.IO.File.ReadAllLines(filePath);
+
+            // Verifica se há pelo menos uma linha no arquivo
+            if (linhas.Length == 0)
             {
-                // Lê todas as linhas do arquivo
-                string[] linhas = System.IO.File.ReadAllLines(filePath);
+                MessageBox.Show("O arquivo está vazio.");
+                return;
+            }
 
-                // Processa as linhas
-                foreach (string linha in linhas)
+            // Tenta converter o primeiro número para a quantidade de corpos
+            if (!int.TryParse(linhas[0].Trim(), out int quantidadeCorpos) || quantidadeCorpos <= 0)
+            {
+                MessageBox.Show("A quantidade de corpos não é válida.");
+                return;
+            }
+
+            // Processa as linhas, começando da segunda linha
+            for (int i = 1; i <= quantidadeCorpos && i < linhas.Length; i++)
+            {
+                string linha = linhas[i];
+                // Divide a linha em partes usando o delimitador ';'
+                var partes = linha.Split(';');
+                if (partes.Length >= 5)
                 {
-                    // Aqui você pode dividir a linha e processar os dados conforme necessário
-                    // Exemplo: supondo que o arquivo tenha linhas no formato "chave=valor"
-                    var partes = linha.Split('=');
-                    if (partes.Length == 2)
-                    {
-                        string chave = partes[0].Trim();
-                        string valor = partes[1].Trim();
+                    string nome = partes[0].Trim();
+                    double massa = double.Parse(partes[1].Trim());
+                    double densidade = double.Parse(partes[2].Trim());
+                    double posX = double.Parse(partes[3].Trim());
+                    double posY = double.Parse(partes[4].Trim());
 
-                        // Faça algo com a chave e o valor
-                        // Por exemplo, você pode armazenar esses valores em um dicionário
-                        Console.WriteLine($"Chave: {chave}, Valor: {valor}");
-                    }
+                    // Cria uma nova instância de Corpo
+                    Corpo corpo = new Corpo(nome, massa, densidade, posX, posY);
+
+                    // Adiciona o corpo ao universo
+                    universo.AdicionarCorpo(corpo);
+                }
+                else
+                {
+                    MessageBox.Show($"Formato inválido na linha {i + 1}.");
                 }
             }
-            catch (Exception ex)
-            {
-                // Lida com exceções, como arquivos não encontrados ou problemas de leitura
-                MessageBox.Show($"Erro ao ler o arquivo: {ex.Message}");
+
+                // Inicia a simulação manualmente
+                simulacaoTimer.Interval = 30; // Define um intervalo muito curto para simular a atualização contínua
+                simulacaoTimer.Tick += (s, args) =>
+                {
+                    AtualizarEDesenhar();
+                };
+                simulacaoTimer.Start(); // Inicia o timer para atualizar a simulação
             }
+        catch (Exception ex)
+        {
+            // Lida com exceções, como arquivos não encontrados ou problemas de leitura
+            MessageBox.Show($"Erro ao ler o arquivo: {ex.Message}");
         }
+}
     }
 }
