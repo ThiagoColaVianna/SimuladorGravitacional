@@ -62,7 +62,7 @@ namespace SimuladorGravitacional
             PosX += VelX;
             PosY += VelY;
 
-            // Verifica colisão com as bordas da tela
+            //// Verifica colisão com as bordas da tela
             if (PosX < 0 || PosX > larguraTela)
             {
                 VelX = -VelX; // Inverte a velocidade em X
