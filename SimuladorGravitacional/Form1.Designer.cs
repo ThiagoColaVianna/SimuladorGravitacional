@@ -31,6 +31,9 @@
             components = new System.ComponentModel.Container();
             contextMenuStrip1 = new ContextMenuStrip(components);
             groupBox1 = new GroupBox();
+            label5 = new Label();
+            label2 = new Label();
+            abrir_doc = new Button();
             Parar_bt = new Button();
             Iniciar_bt = new Button();
             VelY_Box = new TextBox();
@@ -47,9 +50,6 @@
             label3 = new Label();
             Corpos_Box = new TextBox();
             label1 = new Label();
-            button1 = new Button();
-            label2 = new Label();
-            label5 = new Label();
             groupBox1.SuspendLayout();
             SuspendLayout();
             // 
@@ -63,7 +63,7 @@
             groupBox1.BackColor = SystemColors.ControlLightLight;
             groupBox1.Controls.Add(label5);
             groupBox1.Controls.Add(label2);
-            groupBox1.Controls.Add(button1);
+            groupBox1.Controls.Add(abrir_doc);
             groupBox1.Controls.Add(Parar_bt);
             groupBox1.Controls.Add(Iniciar_bt);
             groupBox1.Controls.Add(VelY_Box);
@@ -86,6 +86,34 @@
             groupBox1.Size = new Size(225, 645);
             groupBox1.TabIndex = 1;
             groupBox1.TabStop = false;
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Location = new Point(69, 134);
+            label5.Name = "label5";
+            label5.Size = new Size(89, 15);
+            label5.TabIndex = 26;
+            label5.Text = "INFORMAÇÕES";
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new Point(55, 19);
+            label2.Name = "label2";
+            label2.Size = new Size(112, 15);
+            label2.TabIndex = 25;
+            label2.Text = "FUNCIONALIDADES";
+            // 
+            // abrir_doc
+            // 
+            abrir_doc.Location = new Point(56, 80);
+            abrir_doc.Name = "abrir_doc";
+            abrir_doc.Size = new Size(111, 24);
+            abrir_doc.TabIndex = 24;
+            abrir_doc.Text = "Carregar Arquivos";
+            abrir_doc.UseVisualStyleBackColor = true;
+            abrir_doc.Click += button1_Click;
             // 
             // Parar_bt
             // 
@@ -225,33 +253,6 @@
             label1.TabIndex = 0;
             label1.Text = "Corpos";
             // 
-            // button1
-            // 
-            button1.Location = new Point(56, 80);
-            button1.Name = "button1";
-            button1.Size = new Size(111, 24);
-            button1.TabIndex = 24;
-            button1.Text = "Carregar Arquivos";
-            button1.UseVisualStyleBackColor = true;
-            // 
-            // label2
-            // 
-            label2.AutoSize = true;
-            label2.Location = new Point(55, 19);
-            label2.Name = "label2";
-            label2.Size = new Size(112, 15);
-            label2.TabIndex = 25;
-            label2.Text = "FUNCIONALIDADES";
-            // 
-            // label5
-            // 
-            label5.AutoSize = true;
-            label5.Location = new Point(69, 134);
-            label5.Name = "label5";
-            label5.Size = new Size(89, 15);
-            label5.TabIndex = 26;
-            label5.Text = "INFORMAÇÕES";
-            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -286,7 +287,7 @@
         private TextBox VelX_Box;
         private Button Iniciar_bt;
         private Button Parar_bt;
-        private Button button1;
+        private Button abrir_doc;
         private Label label5;
         private Label label2;
     }

@@ -42,15 +42,18 @@ namespace SimuladorGravitacional
                     if (corposCopia[i].Colidiu(corposCopia[j]))
                     {
                         // Tratamento de colisão
-                        TratamentoColisao(corposCopia[i], corposCopia[j]);
-                        corposParaRemover.Add(corposCopia[i]);
-                        corposParaRemover.Add(corposCopia[j]);
+                        lock (corposParaRemover)
+                        {
+                            corposParaRemover.Add(corposCopia[i]);
+                            corposParaRemover.Add(corposCopia[j]);
+                        }
                     }
                     else
                     {
                         // Cálculo da força gravitacional
-                        double G = 6.67430e-11; // Constante gravitacional
-                        double distancia = corposCopia[i].Distancia(corposCopia[j]);
+                        double G = 0.1; // Constante gravitacional
+                        double distancia = Math.Sqrt(Math.Pow(corposCopia[i].PosX - corposCopia[j].PosX, 2) +
+                              Math.Pow(corposCopia[i].PosY - corposCopia[j].PosY, 2));
 
                         if (distancia > 0)
                         {
@@ -74,15 +77,6 @@ namespace SimuladorGravitacional
                 }
             });
 
-            // Remover corpos que colidiram
-            lock (corpos)
-            {
-                foreach (var corpo in corposParaRemover)
-                {
-                    corpos.Remove(corpo);
-                }
-            }
-
             // Atualizar velocidades baseado nas forças
             Parallel.For(0, corpos.Count, i =>
             {
@@ -105,6 +99,16 @@ namespace SimuladorGravitacional
                 if (corpos[i].PosY < 0) corpos[i].PosY = 0;
                 if (corpos[i].PosY > alturaTela) corpos[i].PosY = alturaTela;
             });
+
+            // Remover corpos colididos e adicionar novos corpos fora do loop principal
+            lock (corpos)
+            {
+                foreach (var corpo in corposParaRemover)
+                {
+                    corpos.Remove(corpo);
+                }
+                corposParaRemover = new ConcurrentBag<Corpo>(); // Limpar a bag de corpos para remover
+            }
         }
 
         private void TratamentoColisao(Corpo a, Corpo b)
@@ -112,9 +116,9 @@ namespace SimuladorGravitacional
             Corpo novoCorpo = a + b; // Usa o operador sobrecarregado
             lock (corpos)
             {
-                corpos.Remove(a);
-                corpos.Remove(b);
-                corpos.Add(novoCorpo);
+                corposParaRemover.Add(a);
+                corposParaRemover.Add(b);
+                corpos.Add(novoCorpo); // Adiciona o novo corpo à lista
             }
         }
     }

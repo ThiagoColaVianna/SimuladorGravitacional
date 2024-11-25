@@ -28,7 +28,7 @@ namespace SimuladorGravitacional
             // Incrementa o contador de iterações
             iteracoes++;
 
-            // Verifica se é uma iteração múltipla de 100
+            // Imprime na tela a cada 4 iterações
             if (iteracoes % 4 == 0)
             {
                 // Armazena os corpos atuais na lista
@@ -36,8 +36,6 @@ namespace SimuladorGravitacional
                 corposParaDesenhar.AddRange(universo.corpos); // Adiciona os corpos atuais
                 Iteracoes_Box.Text = iteracoes.ToString();
 
-                // Atualiza o TextBox com a quantidade de corpos colididos
-                CP_colididos.Text = universo.QuantidadeColididos.ToString();
 
                 // Redesenha a tela
                 this.Invalidate();
@@ -52,7 +50,7 @@ namespace SimuladorGravitacional
 
         public void DesenharCorpos(Graphics g)
         {
-            // Defina um tamanho máximo para evitar overflow
+            
             const double tamanhoMaximo = 100.0;
             const double fatorDeTamanho = 0.01;
 
@@ -101,8 +99,8 @@ namespace SimuladorGravitacional
                     double posY = random.Next(50, this.ClientSize.Height - 50); // Posição aleatória
 
                     // Inicializa velocidades aleatórias
-                    double velX = random.NextDouble() * 10 - 5; // Velocidade aleatória em X
-                    double velY = random.NextDouble() * 10 - 5; // Velocidade aleatória em Y
+                    double velX = random.NextDouble() * 1 - 0.5; // Velocidade aleatória em X
+                    double velY = random.NextDouble() * 1 - 0.5; // Velocidade aleatória em Y
 
                     // Cria um novo corpo com a massa, densidade, posição e velocidades geradas
                     Corpo novoCorpo = new Corpo($"Corpo {i + 1}", massa, densidade, posX, posY)
@@ -151,6 +149,58 @@ namespace SimuladorGravitacional
         {
             // Para a simulação
             simulacaoTimer.Stop(); // Para a simulação
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            // Cria uma nova instância de OpenFileDialog
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            {
+                // Configura o filtro para mostrar apenas arquivos .ini
+                openFileDialog.Filter = "Arquivos INI (*.ini)|*.ini|Todos os arquivos (*.*)|*.*";
+                openFileDialog.Title = "Selecione um arquivo .ini";
+
+                // Exibe o diálogo e verifica se o usuário selecionou um arquivo
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    // Obtém o caminho do arquivo selecionado
+                    string filePath = openFileDialog.FileName;
+
+                    // Aqui você pode carregar e processar o arquivo .ini
+                    CarregarArquivoIni(filePath);
+                }
+            }
+        }
+
+        private void CarregarArquivoIni(string filePath)
+        {            
+            try
+            {
+                // Lê todas as linhas do arquivo
+                string[] linhas = System.IO.File.ReadAllLines(filePath);
+
+                // Processa as linhas
+                foreach (string linha in linhas)
+                {
+                    // Aqui você pode dividir a linha e processar os dados conforme necessário
+                    // Exemplo: supondo que o arquivo tenha linhas no formato "chave=valor"
+                    var partes = linha.Split('=');
+                    if (partes.Length == 2)
+                    {
+                        string chave = partes[0].Trim();
+                        string valor = partes[1].Trim();
+
+                        // Faça algo com a chave e o valor
+                        // Por exemplo, você pode armazenar esses valores em um dicionário
+                        Console.WriteLine($"Chave: {chave}, Valor: {valor}");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // Lida com exceções, como arquivos não encontrados ou problemas de leitura
+                MessageBox.Show($"Erro ao ler o arquivo: {ex.Message}");
+            }
         }
     }
 }
