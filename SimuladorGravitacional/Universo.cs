@@ -62,11 +62,9 @@ namespace SimuladorGravitacional
                             double forca = G * (corposCopia[i].Massa * corposCopia[j].Massa) / (distancia * distancia);
 
                             // Calcula a componente X da força gravitacional
-                            // A diferença de posição entre os corpos é normalizada pela distância total
                             double forcax = forca * (corposCopia[j].PosX - corposCopia[i].PosX) / distancia;
 
                             // Calcula a componente Y da força gravitacional
-                            // A diferença de posição entre os corpos é normalizada pela distância total
                             double forcay = forca * (corposCopia[j].PosY - corposCopia[i].PosY) / distancia;
 
                             lock (corposCopia[i])
@@ -115,10 +113,9 @@ namespace SimuladorGravitacional
                 {
                     corpos.Remove(corpo);
                 }
-                corposParaRemover = new ConcurrentBag<Corpo>(); // Limpar a bag de corpos para remover
+                //corposParaRemover = new ConcurrentBag<Corpo>(); // Limpar a bag de corpos para remover
             }
         }
-
         private void TratamentoColisao(Corpo a, Corpo b)
         {
             Corpo novoCorpo = a + b; // Usa o operador sobrecarregado

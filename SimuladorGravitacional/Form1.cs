@@ -50,7 +50,7 @@ namespace SimuladorGravitacional
 
         public void DesenharCorpos(Graphics g)
         {
-            
+
             const double tamanhoMaximo = 100.0;
             const double fatorDeTamanho = 0.01;
 
@@ -78,6 +78,50 @@ namespace SimuladorGravitacional
                 g.FillEllipse(Brushes.Yellow, x, y, (float)tamanho, (float)tamanho);
             }
         }
+
+        
+        // Método alternativo ao de cima
+        //public void DesenharCorpos(Graphics g)
+        //{
+        //    const double tamanhoMaximo = 100.0;
+        //    const double fatorDeTamanho = 0.01;
+
+        //    // Calcular um fator de zoom
+        //    double zoom = 1.0;
+        //    // Ajustar o zoom com base na posição dos corpos ou de forma dinâmica
+        //    foreach (Corpo corpo in corposParaDesenhar)
+        //    {
+        //        if (corpo.PosX < 100 || corpo.PosY < 100 || corpo.PosX > this.ClientSize.Width - 100 || corpo.PosY > this.ClientSize.Height - 100)
+        //        {
+        //            zoom = 0.5; // Reduz o zoom quando o corpo estiver perto da borda
+        //        }
+        //    }
+
+        //    // Desenha os corpos armazenados na lista
+        //    foreach (Corpo corpo in corposParaDesenhar)
+        //    {
+        //        // Calcular o tamanho da elipse com o fator de zoom
+        //        double tamanho = corpo.Massa * fatorDeTamanho * zoom;
+
+        //        // Limitar o tamanho para evitar overflow
+        //        if (tamanho > tamanhoMaximo)
+        //        {
+        //            tamanho = tamanhoMaximo;
+        //        }
+        //        else if (tamanho < 1.0) // Evitar que o tamanho seja muito pequeno
+        //        {
+        //            tamanho = 1.0;
+        //        }
+
+        //        // Calcular as coordenadas de desenho com o fator de zoom
+        //        float x = (float)((corpo.PosX - tamanho / 2) * zoom);
+        //        float y = (float)((corpo.PosY - tamanho / 2) * zoom);
+
+        //        // Desenhar a elipse
+        //        g.FillEllipse(Brushes.Yellow, x, y, (float)tamanho, (float)tamanho);
+        //    }
+        //}
+
 
         public void Iniciar_bt_Click(object sender, EventArgs e)
         {
@@ -112,7 +156,7 @@ namespace SimuladorGravitacional
                 }
 
                 // Inicia a simulação manualmente
-                simulacaoTimer.Interval = 30; // Define um intervalo muito curto para simular a atualização contínua
+                simulacaoTimer.Interval = 35; // Define um intervalo muito curto para simular a atualização contínua
                 simulacaoTimer.Tick += (s, args) =>
                 {
                     AtualizarEDesenhar();
@@ -173,65 +217,65 @@ namespace SimuladorGravitacional
         }
 
         public void CarregarArquivoIni(string filePath)
-{
-        try
         {
-            // Lê todas as linhas do arquivo
-            string[] linhas = System.IO.File.ReadAllLines(filePath);
-
-            // Verifica se há pelo menos uma linha no arquivo
-            if (linhas.Length == 0)
+            try
             {
-                MessageBox.Show("O arquivo está vazio.");
-                return;
-            }
+                // Lê todas as linhas do arquivo
+                string[] linhas = System.IO.File.ReadAllLines(filePath);
 
-            // Tenta converter o primeiro número para a quantidade de corpos
-            if (!int.TryParse(linhas[0].Trim(), out int quantidadeCorpos) || quantidadeCorpos <= 0)
-            {
-                MessageBox.Show("A quantidade de corpos não é válida.");
-                return;
-            }
-
-            // Processa as linhas, começando da segunda linha
-            for (int i = 1; i <= quantidadeCorpos && i < linhas.Length; i++)
-            {
-                string linha = linhas[i];
-                // Divide a linha em partes usando o delimitador ';'
-                var partes = linha.Split(';');
-                if (partes.Length >= 5)
+                // Verifica se há pelo menos uma linha no arquivo
+                if (linhas.Length == 0)
                 {
-                    string nome = partes[0].Trim();
-                    double massa = double.Parse(partes[1].Trim());
-                    double densidade = double.Parse(partes[2].Trim());
-                    double posX = double.Parse(partes[3].Trim());
-                    double posY = double.Parse(partes[4].Trim());
-
-                    // Cria uma nova instância de Corpo
-                    Corpo corpo = new Corpo(nome, massa, densidade, posX, posY);
-
-                    // Adiciona o corpo ao universo
-                    universo.AdicionarCorpo(corpo);
+                    MessageBox.Show("O arquivo está vazio.");
+                    return;
                 }
-                else
+
+                // Tenta converter o primeiro número para a quantidade de corpos
+                if (!int.TryParse(linhas[0].Trim(), out int quantidadeCorpos) || quantidadeCorpos <= 0)
                 {
-                    MessageBox.Show($"Formato inválido na linha {i + 1}.");
+                    MessageBox.Show("A quantidade de corpos não é válida.");
+                    return;
                 }
-            }
+
+                // Processa as linhas, começando da segunda linha
+                for (int i = 1; i <= quantidadeCorpos && i < linhas.Length; i++)
+                {
+                    string linha = linhas[i];
+                    // Divide a linha em partes usando o delimitador ';'
+                    var partes = linha.Split(';');
+                    if (partes.Length >= 5)
+                    {
+                        string nome = partes[0].Trim();
+                        double massa = double.Parse(partes[1].Trim());
+                        double densidade = double.Parse(partes[2].Trim());
+                        double posX = double.Parse(partes[3].Trim());
+                        double posY = double.Parse(partes[4].Trim());
+
+                        // Cria uma nova instância de Corpo
+                        Corpo corpo = new Corpo(nome, massa, densidade, posX, posY);
+
+                        // Adiciona o corpo ao universo
+                        universo.AdicionarCorpo(corpo);
+                    }
+                    else
+                    {
+                        MessageBox.Show($"Formato inválido na linha {i + 1}.");
+                    }
+                }
 
                 // Inicia a simulação manualmente
-                simulacaoTimer.Interval = 30; // Define um intervalo muito curto para simular a atualização contínua
+                simulacaoTimer.Interval = 35; // Define um intervalo muito curto para simular a atualização contínua
                 simulacaoTimer.Tick += (s, args) =>
                 {
                     AtualizarEDesenhar();
                 };
                 simulacaoTimer.Start(); // Inicia o timer para atualizar a simulação
             }
-        catch (Exception ex)
-        {
-            // Lida com exceções, como arquivos não encontrados ou problemas de leitura
-            MessageBox.Show($"Erro ao ler o arquivo: {ex.Message}");
+            catch (Exception ex)
+            {
+                // Lida com exceções, como arquivos não encontrados ou problemas de leitura
+                MessageBox.Show($"Erro ao ler o arquivo: {ex.Message}");
+            }
         }
-}
     }
 }

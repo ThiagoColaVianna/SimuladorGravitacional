@@ -31,6 +31,7 @@
             components = new System.ComponentModel.Container();
             contextMenuStrip1 = new ContextMenuStrip(components);
             groupBox1 = new GroupBox();
+            label6 = new Label();
             label5 = new Label();
             label2 = new Label();
             abrir_doc = new Button();
@@ -61,6 +62,7 @@
             // groupBox1
             // 
             groupBox1.BackColor = SystemColors.ControlLightLight;
+            groupBox1.Controls.Add(label6);
             groupBox1.Controls.Add(label5);
             groupBox1.Controls.Add(label2);
             groupBox1.Controls.Add(abrir_doc);
@@ -87,10 +89,19 @@
             groupBox1.TabIndex = 1;
             groupBox1.TabStop = false;
             // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Location = new Point(79, 326);
+            label6.Name = "label6";
+            label6.Size = new Size(65, 15);
+            label6.TabIndex = 27;
+            label6.Text = "ATRIBUTOS";
+            // 
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(69, 134);
+            label5.Location = new Point(69, 141);
             label5.Name = "label5";
             label5.Size = new Size(89, 15);
             label5.TabIndex = 26;
@@ -99,7 +110,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(55, 19);
+            label2.Location = new Point(55, 9);
             label2.Name = "label2";
             label2.Size = new Size(112, 15);
             label2.TabIndex = 25;
@@ -107,7 +118,7 @@
             // 
             // abrir_doc
             // 
-            abrir_doc.Location = new Point(56, 80);
+            abrir_doc.Location = new Point(55, 95);
             abrir_doc.Name = "abrir_doc";
             abrir_doc.Size = new Size(111, 24);
             abrir_doc.TabIndex = 24;
@@ -117,7 +128,7 @@
             // 
             // Parar_bt
             // 
-            Parar_bt.Location = new Point(138, 51);
+            Parar_bt.Location = new Point(69, 66);
             Parar_bt.Name = "Parar_bt";
             Parar_bt.Size = new Size(75, 23);
             Parar_bt.TabIndex = 23;
@@ -127,7 +138,7 @@
             // 
             // Iniciar_bt
             // 
-            Iniciar_bt.Location = new Point(6, 51);
+            Iniciar_bt.Location = new Point(69, 37);
             Iniciar_bt.Name = "Iniciar_bt";
             Iniciar_bt.Size = new Size(75, 23);
             Iniciar_bt.TabIndex = 22;
@@ -137,7 +148,7 @@
             // 
             // VelY_Box
             // 
-            VelY_Box.Location = new Point(138, 295);
+            VelY_Box.Location = new Point(154, 439);
             VelY_Box.Name = "VelY_Box";
             VelY_Box.ReadOnly = true;
             VelY_Box.Size = new Size(49, 23);
@@ -146,7 +157,7 @@
             // label11
             // 
             label11.AutoSize = true;
-            label11.Location = new Point(138, 277);
+            label11.Location = new Point(154, 421);
             label11.Name = "label11";
             label11.Size = new Size(29, 15);
             label11.TabIndex = 20;
@@ -155,7 +166,7 @@
             // label10
             // 
             label10.AutoSize = true;
-            label10.Location = new Point(138, 224);
+            label10.Location = new Point(154, 362);
             label10.Name = "label10";
             label10.Size = new Size(29, 15);
             label10.TabIndex = 19;
@@ -163,7 +174,7 @@
             // 
             // VelX_Box
             // 
-            VelX_Box.Location = new Point(138, 242);
+            VelX_Box.Location = new Point(154, 380);
             VelX_Box.Name = "VelX_Box";
             VelX_Box.ReadOnly = true;
             VelX_Box.Size = new Size(49, 23);
@@ -172,7 +183,7 @@
             // label8
             // 
             label8.AutoSize = true;
-            label8.Location = new Point(10, 338);
+            label8.Location = new Point(22, 421);
             label8.Name = "label8";
             label8.Size = new Size(33, 15);
             label8.TabIndex = 15;
@@ -180,7 +191,7 @@
             // 
             // PosY_Box
             // 
-            PosY_Box.Location = new Point(10, 356);
+            PosY_Box.Location = new Point(22, 439);
             PosY_Box.Name = "PosY_Box";
             PosY_Box.ReadOnly = true;
             PosY_Box.Size = new Size(49, 23);
@@ -189,7 +200,7 @@
             // label7
             // 
             label7.AutoSize = true;
-            label7.Location = new Point(10, 277);
+            label7.Location = new Point(22, 362);
             label7.Name = "label7";
             label7.Size = new Size(33, 15);
             label7.TabIndex = 13;
@@ -197,7 +208,7 @@
             // 
             // PosX_Box
             // 
-            PosX_Box.Location = new Point(10, 295);
+            PosX_Box.Location = new Point(22, 380);
             PosX_Box.Name = "PosX_Box";
             PosX_Box.ReadOnly = true;
             PosX_Box.Size = new Size(49, 23);
@@ -205,7 +216,7 @@
             // 
             // TempoIteracao_Box
             // 
-            TempoIteracao_Box.Location = new Point(138, 184);
+            TempoIteracao_Box.Location = new Point(86, 281);
             TempoIteracao_Box.Name = "TempoIteracao_Box";
             TempoIteracao_Box.ReadOnly = true;
             TempoIteracao_Box.Size = new Size(49, 23);
@@ -214,7 +225,7 @@
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(102, 166);
+            label4.Location = new Point(55, 263);
             label4.Name = "label4";
             label4.Size = new Size(123, 15);
             label4.TabIndex = 6;
@@ -222,7 +233,7 @@
             // 
             // Iteracoes_Box
             // 
-            Iteracoes_Box.Location = new Point(10, 242);
+            Iteracoes_Box.Location = new Point(86, 237);
             Iteracoes_Box.Name = "Iteracoes_Box";
             Iteracoes_Box.ReadOnly = true;
             Iteracoes_Box.Size = new Size(49, 23);
@@ -231,7 +242,7 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(10, 224);
+            label3.Location = new Point(79, 217);
             label3.Name = "label3";
             label3.Size = new Size(54, 15);
             label3.TabIndex = 4;
@@ -239,7 +250,7 @@
             // 
             // Corpos_Box
             // 
-            Corpos_Box.Location = new Point(10, 184);
+            Corpos_Box.Location = new Point(86, 191);
             Corpos_Box.Name = "Corpos_Box";
             Corpos_Box.Size = new Size(49, 23);
             Corpos_Box.TabIndex = 1;
@@ -247,7 +258,7 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(10, 166);
+            label1.Location = new Point(79, 173);
             label1.Name = "label1";
             label1.Size = new Size(45, 15);
             label1.TabIndex = 0;
@@ -290,5 +301,6 @@
         private Button abrir_doc;
         private Label label5;
         private Label label2;
+        private Label label6;
     }
 }
