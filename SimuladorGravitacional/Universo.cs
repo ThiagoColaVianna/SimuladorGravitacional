@@ -55,10 +55,18 @@ namespace SimuladorGravitacional
                         double distancia = Math.Sqrt(Math.Pow(corposCopia[i].PosX - corposCopia[j].PosX, 2) +
                               Math.Pow(corposCopia[i].PosY - corposCopia[j].PosY, 2));
 
+                        // Evitar divisão por zero
                         if (distancia > 0)
                         {
+                            // Calcula a força gravitacional total entre os corpos i e j
                             double forca = G * (corposCopia[i].Massa * corposCopia[j].Massa) / (distancia * distancia);
+
+                            // Calcula a componente X da força gravitacional
+                            // A diferença de posição entre os corpos é normalizada pela distância total
                             double forcax = forca * (corposCopia[j].PosX - corposCopia[i].PosX) / distancia;
+
+                            // Calcula a componente Y da força gravitacional
+                            // A diferença de posição entre os corpos é normalizada pela distância total
                             double forcay = forca * (corposCopia[j].PosY - corposCopia[i].PosY) / distancia;
 
                             lock (corposCopia[i])
