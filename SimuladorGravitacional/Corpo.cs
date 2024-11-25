@@ -62,18 +62,19 @@ namespace SimuladorGravitacional
             PosX += VelX;
             PosY += VelY;
 
-            //// Verifica colisão com as bordas da tela
-            if (PosX < 0 || PosX > larguraTela)
+            if (PosX < -larguraTela || PosX > 2 * larguraTela)
             {
-                VelX = -VelX; // Inverte a velocidade em X
-                PosX = Math.Max(0, Math.Min(PosX, larguraTela)); // Ajusta a posição para ficar dentro da tela
+                VelX = -VelX;  // Inverte a direção ao passar dos limites
+                               // Permite que o corpo continue se afastando da tela
             }
 
-            if (PosY < 0 || PosY > alturaTela)
+            if (PosY < -alturaTela || PosY > 2 * alturaTela)
             {
-                VelY = -VelY; // Inverte a velocidade em Y
-                PosY = Math.Max(0, Math.Min(PosY, alturaTela)); // Ajusta a posição para ficar dentro da tela
+                VelY = -VelY;  // Inverte a direção ao passar dos limites
+                               // Permite que o corpo continue se afastando da tela
             }
         }
+
+
     }
 }
